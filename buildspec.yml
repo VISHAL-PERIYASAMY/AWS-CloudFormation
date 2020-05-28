@@ -3,10 +3,6 @@ version: 0.2
 env:
   variables:
     stage: dev
-  parameter-store:
-    AccessKeyId: "Access_key_id "
-    SecretAccessKey: "Secret_access_key "
-
 phases:
   build:
     commands:
