@@ -26,6 +26,17 @@ function deploy() {
     aws cloudformation deploy  --template-file ./resources/create-s3.yml --stack-name $STACK_NAME 
 }
 
+function check_aws() {
+    info "checking aws cli configuration..."
+    
+    if ! [ -f ~/.aws/config ]; then
+        if ! [ -f ~/.aws/credentials ]; then
+            fail "AWS config not found or CLI not installed. Please run \"aws configure\"."
+        fi
+    fi
+    
+    success "aws cli is configured"
+}
 
 function check_jq() {
     info "checking if jq is installed..."
@@ -54,6 +65,7 @@ function check_stack() {
     success "$STACK_NAME exists"
 }
 
+check_aws
 check_jq
 check_stack
 deploy
