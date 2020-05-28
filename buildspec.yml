@@ -1,0 +1,16 @@
+version: 0.2
+
+env:
+  variables:
+    stage: dev
+
+phases:
+  build:
+    commands:
+      - echo Build starting on `date`
+      - chmod +x scripts/deploy-base-infra.sh
+      - ./scripts/deploy-base-infra.sh
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      
