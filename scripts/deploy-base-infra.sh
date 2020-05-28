@@ -27,34 +27,5 @@ function deploy() {
 }
 
 
-function check_jq() {
-    info "checking if jq is installed..."
-    
-    if ! [ -x "$(command -v jq)" ]; then
-        fail "jq is not installed."
-        info "installing jq"
-        apt update -y
-        apt install jq -y
-    fi
-    
-    success "jq is installed"
-}
-
-function check_stack() {
-    info "checking if $STACK_NAME exists..."
-    
-    summaries=$(aws cloudformation list-stacks | jq --arg STACK_NAME "$STACK_NAME" '.StackSummaries |
-    .[] | select((.StackName ==
-    $STACK_NAME) and ((.StackStatus == "CREATE_COMPLETE") or (.StackStatus == "UPDATE_COMPLETE")))')
-    if [ -z "$summaries" ]
-    then
-        fail "The StackStatus of '$STACK_NAME' is not CREATE_COMPLETE or UPDATE_COMPLETE"
-    fi
-    
-    success "$STACK_NAME exists"
-}
-
-check_jq
-check_stack
 deploy
 
