@@ -128,21 +128,21 @@ Outputs:
     Value: !Ref 'S3Bucket'
     Description: Sample Amazon S3 bucket with CORS enabled.
   VPC:
-    value: !Ref 'SampleVPC'
+    Value: !Ref 'SampleVPC'
     Description: Sample Amazon VPC.
   InternetGateway:
-    value: !Ref 'SampleInternetGateway'
+    Value: !Ref 'SampleInternetGateway'
     Description: Sample Amazon InternetGateway.
   PublicRouteTable:
-    value: !Ref 'SamplePublicRouteTable'
+    Value: !Ref 'SamplePublicRouteTable'
     Description: Sample Amazon Public RouteTable.
   VPCSecurityGroup:
-    value: !Ref 'SampleVPCSecurityGroup'
+    Value: !Ref 'SampleVPCSecurityGroup'
     Description: Sample Amazon VPC SecurityGroup.
   VPCPublicSubnet:
-    value: !Ref 'SampleVPCPublicSubnet'
+    Value: !Ref 'SampleVPCPublicSubnet'
     Description: Sample Amazon VPC PublicSubnet.
   Instance:
-    value: !Ref 'SampleInstance'
+    Value: !Ref 'SampleInstance'
     Description: Sample Amazon EC2 Instance.
     
