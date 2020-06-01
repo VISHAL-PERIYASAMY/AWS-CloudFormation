@@ -1,0 +1,74 @@
+Parameters:
+  stage:
+    Type: String
+    Default: 'dev'
+  sampleenvironment:
+    Type: String
+    Description: The environment to be used for cloudformation template
+  BastionImageId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-ebs
+  BastionKeyName:
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Description: EC2 key used to connect to the bastion host
+Resources:
+  SampleVPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: !Join 
+        - ''
+        - - !Ref IpRange
+          - 0.0.0/16
+  SampleInternetGateway:
+    Type: 'AWS::EC2::InternetGateway'
+  SamplePublicRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref SampleVPC
+  VPCGatewayAttachment:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      VpcId: !Ref SampleVPC
+      InternetGatewayId: !Ref SampleInternetGateway
+  SampleVPCSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupName: !Join 
+        - ''
+        - - !Ref sampleenvironment
+          - '-'
+          - SCHEDULER-Batch-SG
+      GroupDescription: EC2 Security Group for instances launched in the VPC by Batch
+      VpcId: !Ref SampleVPC
+      SecurityGroupIngress: []
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: learn-s3-bucket-vishal
+      AccessControl: PublicRead
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteContentAfter1Day
+            Status: 'Enabled'
+            ExpirationInDays: 1
+      CorsConfiguration:
+        CorsRules:
+        - AllowedHeaders: ['*']
+          AllowedMethods: [GET]
+          AllowedOrigins: ['*']
+          ExposedHeaders: [Date]
+          Id: myCORSRuleId1
+          MaxAge: '3600'
+        - AllowedHeaders: [x-amz-*]
+          AllowedMethods: [DELETE]
+          AllowedOrigins: ['*']
+          ExposedHeaders: [Connection, Server, Date]
+          Id: myCORSRuleId2
+          MaxAge: '1800'
+Outputs:
+  BucketName:
+    Value: !Ref 'S3Bucket'
+    Description: Name of the sample Amazon S3 bucket with CORS enabled.

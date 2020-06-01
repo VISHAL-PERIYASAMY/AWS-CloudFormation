@@ -20,7 +20,7 @@ function success() {
 
 function deploy() {
     info "Deploying stack ${STACK_NAME}..."
-    aws cloudformation deploy  --template-file ./resources/create-s3.yml --stack-name $STACK_NAME 
+    aws cloudformation deploy  --template-file ./resources/base-infra.yml --stack-name $STACK_NAME 
     success "Deployement Success on ${STACK_NAME}..."
 }
 
