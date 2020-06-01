@@ -80,8 +80,8 @@ Resources:
     Type: 'AWS::EC2::Instance'
     Properties:
       DisableApiTermination: false
-      NetworkInterface:
-        - AssociatePublicIpAddress: true
+      NetworkInterfaces: 
+      - AssociatePublicIpAddress: "true"
       ImageId: !Ref BastionImageId
       InstanceType: t2.nano
       KeyName: !Ref BastionKeyName
