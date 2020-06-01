@@ -157,6 +157,7 @@ Resources:
     Type: AWS::RDS::DBSecurityGroup
     Properties:
       DBSecurityGroupIngress:
+        CIDRIP: "0.0.0.0/0"
         EC2SecurityGroupId: "sg-014fe78383605461d"
         EC2SecurityGroupName: "SampleVPCSecurityGroup"
       GroupDescription: Frontend Access
