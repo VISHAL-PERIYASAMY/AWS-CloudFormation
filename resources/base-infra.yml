@@ -157,8 +157,7 @@ Resources:
     Type: AWS::RDS::DBSecurityGroup
     Properties:
       DBSecurityGroupIngress:
-        EC2SecurityGroupName:
-        - Ref: SampleVPCSecurityGroup
+        EC2SecurityGroupName: "SampleVPCSecurityGroup"
       GroupDescription: Frontend Access
 
   S3Bucket:
