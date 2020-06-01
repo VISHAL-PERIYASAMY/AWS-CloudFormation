@@ -133,6 +133,25 @@ Resources:
       Tags:
       - Key: Name
         Value: "AdditionalPrivateSubnet"
+  RdsSubnetGroup:
+    Type: 'AWS::RDS::DBSubnetGroup'
+    Properties:
+      DBSubnetGroupDescription: RDS subnet group
+      SubnetIds:
+        - !Ref SampleVPCPrivateSubnet
+        - !Ref AdditionalPrivateSubnet
+  SampleRDSDB:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBSubnetGroupName: !Ref RdsSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref SampleVPCSecurityGroup
+      AllocatedStorage: '5'
+      DBInstanceClass: db.m5.xlarge
+      Engine: MySQL
+      MasterUsername: vishal
+      MasterUserPassword: adminadmin
+    DeletionPolicy: Snapshot
   S3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
