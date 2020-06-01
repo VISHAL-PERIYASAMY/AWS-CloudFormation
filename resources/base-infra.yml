@@ -144,8 +144,6 @@ Resources:
     Type: AWS::RDS::DBInstance
     Properties:
       DBSubnetGroupName: !Ref RdsSubnetGroup
-      VpcSecurityGroupIds:
-        - !Ref SampleVPCSecurityGroup
       AllocatedStorage: '5'
       DBInstanceClass: db.m5.xlarge
       Engine: MySQL
