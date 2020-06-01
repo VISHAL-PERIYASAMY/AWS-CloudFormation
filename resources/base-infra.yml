@@ -158,7 +158,7 @@ Resources:
     Properties: 
       GroupDescription: "Ingress for Amazon EC2 security group"
       DBSecurityGroupIngress:
-        - DbSecurityByEC2SecurityGroupIngress
+        - [DbSecurityByEC2SecurityGroupIngress]
       EC2VpcId: "vpc-01528c56c689226a4"
   DbSecurityByEC2SecurityGroupIngress: 
     Type: AWS::RDS::DBSecurityGroupIngress
