@@ -138,7 +138,7 @@ Resources:
       CidrBlock: !Join 
         - ''
         - - !Ref IpRange
-          - 0.4.0/24
+          - 0.4.0/16
       VpcId: !Ref SampleVPC
       MapPublicIpOnLaunch: 'False'
       Tags:
