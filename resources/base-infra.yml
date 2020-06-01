@@ -80,6 +80,7 @@ Resources:
     Type: 'AWS::EC2::Instance'
     Properties:
       DisableApiTermination: false
+      AssociatePublicIpAddress: true
       ImageId: !Ref BastionImageId
       InstanceType: t2.nano
       KeyName: !Ref BastionKeyName
@@ -88,6 +89,9 @@ Resources:
       SecurityGroupIds:
         - !Ref SampleVPCSecurityGroup
       UserData: !Base64 yum install mysql-server --assumeyes
+      Tags:
+      - Key: Name
+        Value: "SampleInstance"
   S3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
