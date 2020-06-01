@@ -80,16 +80,17 @@ Resources:
     Type: 'AWS::EC2::Instance'
     Properties:
       DisableApiTermination: false
-      NetworkInterfaces: 
-      - AssociatePublicIpAddress: "true"
-        DeviceIndex: "0"
       ImageId: !Ref BastionImageId
       InstanceType: t2.nano
       KeyName: !Ref BastionKeyName
       Monitoring: false
-      SubnetId: !Ref SampleVPCPublicSubnet
-      SecurityGroupIds:
-        - !Ref SampleVPCSecurityGroup
+      NetworkInterfaces: 
+      - AssociatePublicIpAddress: "true"
+        DeviceIndex: "0"
+        GroupSet: 
+          - Ref: "SampleVPCSecurityGroup"
+        SubnetId: 
+          Ref: "SampleVPCPublicSubnet"
       UserData: !Base64 yum install mysql-server --assumeyes
       Tags:
       - Key: Name
