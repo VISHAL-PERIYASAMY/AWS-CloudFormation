@@ -140,10 +140,14 @@ Resources:
       SubnetIds:
         - !Ref SampleVPCPrivateSubnet
         - !Ref AdditionalPrivateSubnet
-  RdsSecurityGroup:
-    Type: AWS::RDS::DBSecurityGroupIngress
+  DbSecurityByEC2SecurityGroup: 
+    Type: AWS::RDS::DBSecurityGroup
     Properties: 
-      DBSecurityGroupName: 'SampleVPCSecurityGroup'
+      GroupDescription: "Ingress for Amazon EC2 security group"
+      DBSecurityGroupIngress: 
+        - 
+          EC2SecurityGroupId: "sg-014fe78383605461d"
+          EC2SecurityGroupOwnerId: "102878424833"
   SampleRDSDB:
     Type: AWS::RDS::DBInstance
     Properties:
@@ -153,6 +157,9 @@ Resources:
       Engine: MySQL
       MasterUsername: vishal
       MasterUserPassword: adminadmin
+      DBSecurityGroups: 
+        - 
+          Ref: "DbSecurityByEC2SecurityGroup"
     DeletionPolicy: Snapshot
   S3Bucket:
     Type: AWS::S3::Bucket
