@@ -92,7 +92,6 @@ Resources:
   SampleInstance:
     Type: 'AWS::EC2::Instance'
     Properties:
-      AvailabilityZone: 'us-east-1b'
       DisableApiTermination: false
       ImageId: !Ref BastionImageId
       InstanceType: t2.nano
@@ -112,7 +111,6 @@ Resources:
   SampleVPCPrivateSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
-      AvailabilityZone: 'us-east-1a'
       CidrBlock: !Join 
         - ''
         - - !Ref IpRange
@@ -142,14 +140,6 @@ Resources:
       SubnetIds:
         - !Ref SampleVPCPrivateSubnet
         - !Ref AdditionalPrivateSubnet
-  DbSecurityByEC2SecurityGroup: 
-    Type: AWS::RDS::DBSecurityGroup
-    Properties: 
-      GroupDescription: "Ingress for Amazon EC2 security group"
-      DBSecurityGroupIngress: 
-        - 
-          EC2SecurityGroupId: "sg-014fe78383605461d"
-          EC2SecurityGroupOwnerId: "102878424833"
   SampleRDSDB:
     Type: AWS::RDS::DBInstance
     Properties:
@@ -159,9 +149,6 @@ Resources:
       Engine: MySQL
       MasterUsername: vishal
       MasterUserPassword: adminadmin
-      DBSecurityGroups: 
-        - 
-          Ref: "DbSecurityByEC2SecurityGroup"
     DeletionPolicy: Snapshot
   S3Bucket:
     Type: AWS::S3::Bucket
