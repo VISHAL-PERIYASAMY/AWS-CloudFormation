@@ -140,12 +140,25 @@ Resources:
       SubnetIds:
         - !Ref SampleVPCPrivateSubnet
         - !Ref AdditionalPrivateSubnet
+  WebServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP access via port 80 and SSH access
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp: 0.0.0.0/0
   DBSecurityGroup:
     Type: AWS::RDS::DBSecurityGroup
     Properties:
       DBSecurityGroupIngress:
         EC2SecurityGroupName:
-          Ref: SampleVPCSecurityGroup
+          Ref: WebServerSecurityGroup
       GroupDescription: Sample Security Group
   SampleRDSDB:
     Type: AWS::RDS::DBInstance
