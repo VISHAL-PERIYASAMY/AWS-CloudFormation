@@ -108,6 +108,17 @@ Resources:
       Tags:
       - Key: Name
         Value: "SampleInstance"
+  SampleRDSDB:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBSecurityGroups:
+      - Ref: SampleVPCSecurityGroup
+      AllocatedStorage: '5'
+      DBInstanceClass: db.m1.small
+      Engine: MySQL
+      MasterUsername: admin
+      MasterUserPassword: admin
+    DeletionPolicy: Snapshot
   S3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
