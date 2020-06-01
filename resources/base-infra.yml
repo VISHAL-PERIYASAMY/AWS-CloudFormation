@@ -108,11 +108,17 @@ Resources:
       Tags:
       - Key: Name
         Value: "SampleInstance"
+  RdsSubnetGroup:
+    Type: 'AWS::RDS::DBSubnetGroup'
+    Properties:
+      SubnetIds:
+        - !Ref SampleVPCPrivateSubnet
   SampleRDSDB:
     Type: AWS::RDS::DBInstance
     Properties:
-      DBSecurityGroups:
-      - Ref: SampleVPCSecurityGroup
+      DBSubnetGroupName: !Ref RdsSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref SampleVPCSecurityGroup
       AllocatedStorage: '5'
       DBInstanceClass: db.m5.xlarge
       Engine: MySQL
