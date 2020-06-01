@@ -8,6 +8,9 @@ Parameters:
   BastionImageId:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
     Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-ebs
+  BastionKeyName:
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Description: EC2 key used to connect to the bastion host
   IpRange:
     Type: String
 Resources:
@@ -48,8 +51,8 @@ Resources:
       SecurityGroupIngress: 
         - IpProtocol: tcp
           CidrIp: 0.0.0.0/0
-          FromPort: 0
-          ToPort: 65535
+          FromPort: 3306
+          ToPort: 3306
   SampleVPCPublicSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
@@ -73,6 +76,18 @@ Resources:
     Properties:
       RouteTableId: !Ref SamplePublicRouteTable
       SubnetId: !Ref SampleVPCPublicSubnet
+  SampleInstance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      DisableApiTermination: false
+      ImageId: !Ref BastionImageId
+      InstanceType: t2.nano
+      KeyName: !Ref BastionKeyName
+      Monitoring: false
+      SubnetId: !Ref SampleVPCPublicSubnet
+      SecurityGroupIds:
+        - !Ref SampleVPCSecurityGroup
+      UserData: !Base64 yum install mysql-server --assumeyes
   S3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain

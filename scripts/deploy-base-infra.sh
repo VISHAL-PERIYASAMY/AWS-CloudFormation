@@ -21,7 +21,7 @@ function success() {
 function deploy() {
     info "Deploying stack ${STACK_NAME}..."
     ip_range="102."
-    aws cloudformation deploy  --template-file ./resources/base-infra.yml --stack-name $STACK_NAME  --parameter-overrides BastionKeyName="sample-${stage}-kp" sampleenvironment="${stage}" IpRange=${ip_range}
+    aws cloudformation deploy  --template-file ./resources/base-infra.yml --stack-name $STACK_NAME  --parameter-overrides BastionKeyName="sample-${stage}-kp" sampleenvironment="${stage}" IpRange=${ip_range} BastionKeyName="AWS-CloudFormation"
     success "Deployement Success on ${STACK_NAME}..."
 }
 
