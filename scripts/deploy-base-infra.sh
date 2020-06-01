@@ -20,7 +20,7 @@ function success() {
 
 function deploy() {
     info "Deploying stack ${STACK_NAME}..."
-    aws cloudformation deploy  --template-file ./resources/base-infra.yml --stack-name $STACK_NAME BastionKeyName="sample-${stage}-kp" sampleenvironment="${stage}"
+    aws cloudformation deploy  --template-file ./resources/base-infra.yml --stack-name $STACK_NAME  --parameter-overrides BastionKeyName="sample-${stage}-kp" sampleenvironment="${stage}"
     success "Deployement Success on ${STACK_NAME}..."
 }
 
