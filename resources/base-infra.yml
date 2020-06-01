@@ -81,7 +81,7 @@ Resources:
     Properties:
       DisableApiTermination: false
       NetworkInterface:
-      - AssociatePublicIpAddress: true
+        - AssociatePublicIpAddress: true
       ImageId: !Ref BastionImageId
       InstanceType: t2.nano
       KeyName: !Ref BastionKeyName
