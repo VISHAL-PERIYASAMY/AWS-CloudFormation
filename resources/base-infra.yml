@@ -148,19 +148,18 @@ Resources:
       AllocatedStorage: '5'
       DBInstanceClass: db.m5.xlarge
       Engine: MySQL
-      DBSecurityGroups:
-      - Ref: DBSecurityGroup
+      DBSecurityGroups: [Ref: DBSecurityGroup]
       MasterUsername: vishal
       MasterUserPassword: admin123
     DeletionPolicy: Snapshot
+
   DBSecurityGroup:
     Type: AWS::RDS::DBSecurityGroup
     Properties:
       DBSecurityGroupIngress:
-        CIDRIP: "0.0.0.0/0"
-        EC2SecurityGroupId: "sg-014fe78383605461d"
-        EC2SecurityGroupName: "SampleVPCSecurityGroup"
-      GroupDescription: Frontend Access
+        EC2SecurityGroupName:
+          Ref: SampleVPCSecurityGroup
+      GroupDescription: Dev Database Security Group
 
   S3Bucket:
     Type: AWS::S3::Bucket
