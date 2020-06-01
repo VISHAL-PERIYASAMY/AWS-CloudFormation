@@ -114,10 +114,10 @@ Resources:
       DBSecurityGroups:
       - Ref: SampleVPCSecurityGroup
       AllocatedStorage: '5'
-      DBInstanceClass: db.m1.small
+      DBInstanceClass: db.m5.xlarge
       Engine: MySQL
-      MasterUsername: admin
-      MasterUserPassword: admin
+      MasterUsername: vishal
+      MasterUserPassword: adminadmin
     DeletionPolicy: Snapshot
   S3Bucket:
     Type: AWS::S3::Bucket
