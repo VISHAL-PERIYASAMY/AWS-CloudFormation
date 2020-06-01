@@ -19,17 +19,30 @@ Resources:
         - ''
         - - !Ref IpRange
           - 0.0.0/16
+      Tags:
+      - Key: Name
+        Value:  "SampleVPC"
   SampleInternetGateway:
     Type: 'AWS::EC2::InternetGateway'
+    Properties:
+      Tags:
+      - Key: Name
+        Value:  "SampleInternetGateway"
   SamplePublicRouteTable:
     Type: 'AWS::EC2::RouteTable'
     Properties:
       VpcId: !Ref SampleVPC
+      Tags:
+      - Key: Name
+        Value:  "SamplePublicRouteTable"
   VPCGatewayAttachment:
     Type: 'AWS::EC2::VPCGatewayAttachment'
     Properties:
       VpcId: !Ref SampleVPC
       InternetGatewayId: !Ref SampleInternetGateway
+      Tags:
+      - Key: Name
+        Value:  "VPCGatewayAttachment"
   SampleVPCSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -37,10 +50,15 @@ Resources:
         - ''
         - - !Ref sampleenvironment
           - '-'
-          - SCHEDULER-Batch-SG
       GroupDescription: EC2 Security Group for instances launched in the VPC by Batch
       VpcId: !Ref SampleVPC
-      SecurityGroupIngress: []
+      SecurityGroupIngress: 
+        - CidrIp: 0.0.0.0/0
+          FromPort: 0
+          ToPort: 65535
+      Tags:
+      - Key: Name
+        Value:  "SampleVPCSecurityGroup"
   S3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
