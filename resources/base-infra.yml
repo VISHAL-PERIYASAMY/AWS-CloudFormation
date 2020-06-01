@@ -158,8 +158,15 @@ Resources:
     Properties: 
       GroupDescription: "Ingress for Amazon EC2 security group"
       DBSecurityGroupIngress:
-          EC2SecurityGroupName: "SampleVPCSecurityGroup"
+        - DbSecurityByEC2SecurityGroupIngress
       EC2VpcId: "vpc-01528c56c689226a4"
+  DbSecurityByEC2SecurityGroupIngress: 
+    Type: AWS::RDS::DBSecurityGroupIngress
+    Properties: 
+      CIDRIP: "0.0.0.0/0"
+      EC2SecurityGroupName: "SampleVPCSecurityGroup"
+      EC2SecurityGroupId: "sg-014fe78383605461d"
+      EC2SecurityGroupOwnerId: "102878424833"
   S3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
