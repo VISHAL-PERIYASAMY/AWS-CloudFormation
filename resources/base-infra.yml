@@ -110,8 +110,8 @@ Resources:
         Value: "SampleInstance"
   RdsSubnetGroup:
     Type: 'AWS::RDS::DBSubnetGroup'
-    DBSubnetGroupDescription: RDS subnet group
     Properties:
+      DBSubnetGroupDescription: RDS subnet group
       SubnetIds:
         - !Ref SampleVPCPrivateSubnet
   SampleRDSDB:
