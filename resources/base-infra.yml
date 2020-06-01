@@ -158,7 +158,6 @@ Resources:
     Properties: 
       GroupDescription: "Ingress for Amazon EC2 security group"
       DBSecurityGroupIngress: 
-        - 
           EC2SecurityGroupId: "sg-014fe78383605461d"
           EC2SecurityGroupOwnerId: "102878424833"
   S3Bucket:
