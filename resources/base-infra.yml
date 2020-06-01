@@ -111,6 +111,7 @@ Resources:
   SampleVPCPrivateSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
+    AvailabilityZone: 'us-east-1a'
       CidrBlock: !Join 
         - ''
         - - !Ref IpRange
@@ -123,7 +124,7 @@ Resources:
   AdditionalPrivateSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
-      AvailabilityZone: 'us-east-1'
+      AvailabilityZone: 'us-east-1b'
       CidrBlock: !Join 
         - ''
         - - !Ref IpRange
