@@ -66,6 +66,18 @@ Resources:
       Tags:
       - Key: Name
         Value: "SampleVPCPublicSubnet"
+  SampleVPCPrivateSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: !Join 
+        - ''
+        - - !Ref IpRange
+          - 0.1.0/24
+      VpcId: !Ref SampleVPC
+      MapPublicIpOnLaunch: 'False'
+      Tags:
+      - Key: Name
+        Value: "SampleVPCPrivateSubnet"
   SamplePublicRoute:
     Type: 'AWS::EC2::Route'
     Properties:
