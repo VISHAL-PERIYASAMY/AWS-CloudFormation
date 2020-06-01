@@ -21,7 +21,7 @@ Resources:
         - ''
         - - !Ref IpRange
           - 0.0.0/16
-       EnableDnsHostnames: 'True'
+      EnableDnsHostnames: 'True'
       Tags:
       - Key: Name
         Value:  "SampleVPC"
