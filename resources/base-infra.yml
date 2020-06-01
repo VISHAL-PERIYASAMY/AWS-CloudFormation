@@ -158,7 +158,7 @@ Resources:
     Properties:
       DBSecurityGroupIngress:
         EC2SecurityGroupName:
-          Ref: SampleVPCSecurityGroup
+        - Ref: SampleVPCSecurityGroup
       GroupDescription: Frontend Access
 
   S3Bucket:
