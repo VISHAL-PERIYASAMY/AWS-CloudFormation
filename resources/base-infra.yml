@@ -104,7 +104,7 @@ Resources:
           - Ref: "SampleVPCSecurityGroup"
         SubnetId: 
           Ref: "SampleVPCPublicSubnet"
-      UserData: sudo yum install mysql-server 
+      UserData: !Base64 sudo yum install mysql-server 
       Tags:
       - Key: Name
         Value: "SampleInstance"
