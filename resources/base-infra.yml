@@ -143,30 +143,24 @@ Resources:
   SampleRDSDB:
     Type: AWS::RDS::DBInstance
     Properties:
-      DBSecurityGroups: 
-        - 
-          Ref: "DbSecurityByEC2SecurityGroup"
+      DBName: "Sample"
       DBSubnetGroupName: !Ref RdsSubnetGroup
       AllocatedStorage: '5'
       DBInstanceClass: db.m5.xlarge
       Engine: MySQL
+      DBSecurityGroups:
+      - Ref: DBSecurityGroup
       MasterUsername: vishal
       MasterUserPassword: admin123
     DeletionPolicy: Snapshot
-  DbSecurityByEC2SecurityGroup: 
+  DBSecurityGroup:
     Type: AWS::RDS::DBSecurityGroup
-    Properties: 
-      GroupDescription: "Ingress for Amazon EC2 security group"
+    Properties:
       DBSecurityGroupIngress:
-        - [DbSecurityByEC2SecurityGroupIngress]
-      EC2VpcId: "vpc-01528c56c689226a4"
-  DbSecurityByEC2SecurityGroupIngress: 
-    Type: AWS::RDS::DBSecurityGroupIngress
-    Properties: 
-      CIDRIP: "0.0.0.0/0"
-      EC2SecurityGroupName: "SampleVPCSecurityGroup"
-      EC2SecurityGroupId: "sg-014fe78383605461d"
-      EC2SecurityGroupOwnerId: "102878424833"
+        EC2SecurityGroupName:
+          Ref: SampleVPCSecurityGroup
+      GroupDescription: Frontend Access
+
   S3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
