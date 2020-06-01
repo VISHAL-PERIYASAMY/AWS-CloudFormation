@@ -144,6 +144,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Enable HTTP access via port 80 and SSH access
+      VpcId: !Ref SampleVPC
       SecurityGroupIngress:
       - IpProtocol: tcp
         FromPort: '80'
