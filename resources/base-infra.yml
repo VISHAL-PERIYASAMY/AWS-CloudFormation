@@ -72,7 +72,7 @@ Resources:
       CidrBlock: !Join 
         - ''
         - - !Ref IpRange
-          - 0.1.0/24
+          - 0.2.0/24
       VpcId: !Ref SampleVPC
       MapPublicIpOnLaunch: 'False'
       Tags:
