@@ -140,6 +140,10 @@ Resources:
       SubnetIds:
         - !Ref SampleVPCPrivateSubnet
         - !Ref AdditionalPrivateSubnet
+  RdsSecurityGroup:
+    Type: AWS::RDS::DBSecurityGroupIngress
+    Properties: 
+      DBSecurityGroupName: 'SampleVPCSecurityGroup'
   SampleRDSDB:
     Type: AWS::RDS::DBInstance
     Properties:
