@@ -111,16 +111,10 @@ Resources:
   SampleVPCPrivateSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
-      AvailabilityZone: !Select 
-        - '0'
-        - !FindInMap 
-          - RegionAndEnvironment2AZ
-          - !Ref 'AWS::Region'
-          - !Ref sampleenvironment
       CidrBlock: !Join 
         - ''
         - - !Ref IpRange
-          - 0.1.0/16
+          - 0.2.0/16
       VpcId: !Ref SampleVPC
       MapPublicIpOnLaunch: 'False'
       Tags:
