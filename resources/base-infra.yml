@@ -144,7 +144,8 @@ Resources:
     Type: AWS::RDS::DBInstance
     Properties:
       DBSecurityGroups: 
-        - Ref: "DbSecurityByEC2SecurityGroup"
+        - 
+          Ref: "DbSecurityByEC2SecurityGroup"
       DBSubnetGroupName: !Ref RdsSubnetGroup
       AllocatedStorage: '5'
       DBInstanceClass: db.m5.xlarge
@@ -158,7 +159,7 @@ Resources:
       GroupDescription: "Ingress for Amazon EC2 security group"
       DBSecurityGroupIngress: 
         - 
-          EC2SecurityGroupId: "sg-014fe78383605461d "
+          EC2SecurityGroupId: "sg-014fe78383605461d"
           EC2SecurityGroupOwnerId: "102878424833"
   S3Bucket:
     Type: AWS::S3::Bucket
