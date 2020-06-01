@@ -156,7 +156,6 @@ Resources:
       Engine: MySQL
       MasterUsername: vishal
       MasterUserPassword: adminadmin
-      DBSecurityGroups: !Ref DBSecurityGroup
     DeletionPolicy: Snapshot
   S3Bucket:
     Type: AWS::S3::Bucket
