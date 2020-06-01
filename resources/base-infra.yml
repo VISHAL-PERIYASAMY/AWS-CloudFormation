@@ -126,43 +126,6 @@ Resources:
       Tags:
       - Key: Name
         Value: "SampleVPCPrivateSubnet"
-  AdditionalPrivateSubnet:
-    Type: 'AWS::EC2::Subnet'
-    Properties:
-      AvailabilityZone: !Select 
-        - '1'
-        - !FindInMap 
-          - RegionAndEnvironment2AZ
-          - !Ref 'AWS::Region'
-          - !Ref sampleenvironment
-      CidrBlock: !Join 
-        - ''
-        - - !Ref IpRange
-          - 0.6.0/16
-      VpcId: !Ref SampleVPC
-      MapPublicIpOnLaunch: 'False'
-      Tags:
-      - Key: Name
-        Value: "AdditionalPrivateSubnet"
-  RdsSubnetGroup:
-    Type: 'AWS::RDS::DBSubnetGroup'
-    Properties:
-      DBSubnetGroupDescription: RDS subnet group
-      SubnetIds:
-        - !Ref SampleVPCPrivateSubnet
-        - !Ref AdditionalPrivateSubnet
-  SampleRDSDB:
-    Type: AWS::RDS::DBInstance
-    Properties:
-      DBSubnetGroupName: !Ref RdsSubnetGroup
-      VpcSecurityGroupIds:
-        - !Ref SampleVPCSecurityGroup
-      AllocatedStorage: '5'
-      DBInstanceClass: db.m5.xlarge
-      Engine: MySQL
-      MasterUsername: vishal
-      MasterUserPassword: adminadmin
-    DeletionPolicy: Snapshot
   S3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
