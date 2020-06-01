@@ -104,7 +104,7 @@ Resources:
           - Ref: "SampleVPCSecurityGroup"
         SubnetId: 
           Ref: "SampleVPCPublicSubnet"
-      UserData: !Base64 yum install mysql-server --assumeyes
+      UserData: sudo yum install mysql-server 
       Tags:
       - Key: Name
         Value: "SampleInstance"
@@ -140,6 +140,13 @@ Resources:
       SubnetIds:
         - !Ref SampleVPCPrivateSubnet
         - !Ref AdditionalPrivateSubnet
+  DBSecurityGroup:
+    Type: AWS::RDS::DBSecurityGroup
+    Properties:
+      DBSecurityGroupIngress:
+        EC2SecurityGroupName:
+          Ref: SampleVPCSecurityGroup
+      GroupDescription: Sample Security Group
   SampleRDSDB:
     Type: AWS::RDS::DBInstance
     Properties:
@@ -149,6 +156,8 @@ Resources:
       Engine: MySQL
       MasterUsername: vishal
       MasterUserPassword: adminadmin
+      DBSecurityGroups:
+      - Ref: DBSecurityGroup
     DeletionPolicy: Snapshot
   S3Bucket:
     Type: AWS::S3::Bucket
