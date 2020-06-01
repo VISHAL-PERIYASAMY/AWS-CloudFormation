@@ -120,6 +120,19 @@ Resources:
       Tags:
       - Key: Name
         Value: "SampleVPCPrivateSubnet"
+  AdditionalPrivateSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone: 'us-east-1b'
+      CidrBlock: !Join 
+        - ''
+        - - !Ref IpRange
+          - 0.6.0/16
+      VpcId: !Ref SampleVPC
+      MapPublicIpOnLaunch: 'False'
+      Tags:
+      - Key: Name
+        Value: "AdditionalPrivateSubnet"
   S3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
