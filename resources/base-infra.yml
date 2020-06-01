@@ -40,9 +40,6 @@ Resources:
     Properties:
       VpcId: !Ref SampleVPC
       InternetGatewayId: !Ref SampleInternetGateway
-      Tags:
-      - Key: Name
-        Value:  "VPCGatewayAttachment"
   SampleVPCSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
