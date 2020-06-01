@@ -10,7 +10,6 @@ Parameters:
     Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-ebs
   IpRange:
     Type: String
-    Description: 'For qa -> 192, marketplace -> 172'
 Resources:
   SampleVPC:
     Type: 'AWS::EC2::VPC'
@@ -51,6 +50,29 @@ Resources:
           CidrIp: 0.0.0.0/0
           FromPort: 0
           ToPort: 65535
+  SampleVPCPublicSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: !Join 
+        - ''
+        - - !Ref IpRange
+          - 0.1.0/24
+      VpcId: !Ref SampleVPC
+      MapPublicIpOnLaunch: 'True'
+      Tags:
+      - Key: Name
+        Value: "SampleVPCPublicSubnet"
+  SamplePublicRoute:
+    Type: 'AWS::EC2::Route'
+    Properties:
+      RouteTableId: !Ref SamplePublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref SampleInternetGateway
+  SubnetPublicRouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      RouteTableId: !Ref SamplePublicRouteTable
+      SubnetId: !Ref SampleVPCPublicSubnet
   S3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
