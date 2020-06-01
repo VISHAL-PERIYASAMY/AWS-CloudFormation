@@ -13,6 +13,18 @@ Parameters:
     Description: EC2 key used to connect to the bastion host
   IpRange:
     Type: String
+Mappings:
+  RegionAndEnvironment2AZ:
+    us-east-1:
+      dev:
+        - us-east-1a
+        - us-east-1b
+        - us-east-1c
+    us-west-2:
+      dev:
+        - us-west-2a
+        - us-west-2b
+        - us-west-2c
 Resources:
   SampleVPC:
     Type: 'AWS::EC2::VPC'
@@ -66,18 +78,6 @@ Resources:
       Tags:
       - Key: Name
         Value: "SampleVPCPublicSubnet"
-  SampleVPCPrivateSubnet:
-    Type: 'AWS::EC2::Subnet'
-    Properties:
-      CidrBlock: !Join 
-        - ''
-        - - !Ref IpRange
-          - 0.2.0/24
-      VpcId: !Ref SampleVPC
-      MapPublicIpOnLaunch: 'False'
-      Tags:
-      - Key: Name
-        Value: "SampleVPCPrivateSubnet"
   SamplePublicRoute:
     Type: 'AWS::EC2::Route'
     Properties:
@@ -108,12 +108,49 @@ Resources:
       Tags:
       - Key: Name
         Value: "SampleInstance"
+  SampleVPCPrivateSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone: !Select 
+        - '0'
+        - !FindInMap 
+          - RegionAndEnvironment2AZ
+          - !Ref 'AWS::Region'
+          - !Ref sampleenvironment
+      CidrBlock: !Join 
+        - ''
+        - - !Ref IpRange
+          - 0.2.0/24
+      VpcId: !Ref SampleVPC
+      MapPublicIpOnLaunch: 'False'
+      Tags:
+      - Key: Name
+        Value: "SampleVPCPrivateSubnet"
+  AdditionalPrivateSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone: !Select 
+        - '1'
+        - !FindInMap 
+          - RegionAndEnvironment2AZ
+          - !Ref 'AWS::Region'
+          - !Ref sampleenvironment
+      CidrBlock: !Join 
+        - ''
+        - - !Ref IpRange
+          - 0.4.0/24
+      VpcId: !Ref SampleVPC
+      MapPublicIpOnLaunch: 'False'
+      Tags:
+      - Key: Name
+        Value: "AdditionalPrivateSubnet"
   RdsSubnetGroup:
     Type: 'AWS::RDS::DBSubnetGroup'
     Properties:
       DBSubnetGroupDescription: RDS subnet group
       SubnetIds:
         - !Ref SampleVPCPrivateSubnet
+        - !Ref AdditionalPrivateSubnet
   SampleRDSDB:
     Type: AWS::RDS::DBInstance
     Properties:
