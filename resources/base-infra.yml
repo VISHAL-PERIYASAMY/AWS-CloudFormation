@@ -150,17 +150,11 @@ Resources:
       DBSubnetGroupName: !Ref RdsSubnetGroup
       AllocatedStorage: '5'
       DBInstanceClass: db.m4.large
-      DBSecurityGroups: [Ref: RdsDBSecurityGroup]
+      VPCSecurityGroups:
+      - Fn::GetAtt: [ SampleVPCSecurityGroup, GroupId]
       MasterUsername: vishal
       MasterUserPassword: admin123
 
-  RdsDBSecurityGroup:
-    Type: AWS::RDS::DBSecurityGroup
-    Properties:
-      DBSecurityGroupIngress:
-        EC2SecurityGroupName:
-          Ref: SampleVPCSecurityGroup
-      GroupDescription: Dev Database Security Group
 
   S3Bucket:
     Type: AWS::S3::Bucket
