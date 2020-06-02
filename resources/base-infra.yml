@@ -13,6 +13,19 @@ Parameters:
     Description: EC2 key used to connect to the bastion host
   IpRange:
     Type: String
+  DatabaseName:
+    Type: String
+    Default: Sample-rds-db
+  EngineVersion:
+    Type: String
+    Default: 8.0.16
+  MasterUsername:
+    Type: String
+    Default: vishal
+  MasterUserPassword:
+    Type: String
+    NoEcho: true
+    Default: adminadmin
 Mappings:
   RegionAndEnvironment2AZ:
     us-east-1:
@@ -143,18 +156,17 @@ Resources:
   SampleRDSDB:
     Type: AWS::RDS::DBInstance
     Properties:
-      DBInstanceIdentifier: "Sample-rds-db"
+      DBInstanceIdentifier: !Ref DatabaseName
       DBName: "Sample"
       Engine: MySQL
-      EngineVersion: 8.0.16
+      EngineVersion: !Ref EngineVersion
       DBSubnetGroupName: !Ref RdsSubnetGroup
       AllocatedStorage: '5'
       DBInstanceClass: db.m4.large
       VPCSecurityGroups:
       - Fn::GetAtt: [ SampleVPCSecurityGroup, GroupId]
-      MasterUsername: vishal
-      MasterUserPassword: admin123
-
+      MasterUsername: !Ref MasterUsername
+      MasterUserPassword: !Ref MasterUserPassword
 
   S3Bucket:
     Type: AWS::S3::Bucket
