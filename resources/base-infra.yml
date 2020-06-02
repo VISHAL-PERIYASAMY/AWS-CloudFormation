@@ -58,7 +58,7 @@ Resources:
   SampleVPCSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: "SampleVPCSecurityGroup"
+      GroupName: SampleVPCSecurityGroup
       GroupDescription: EC2 Security Group for instances launched in the VPC by Batch
       VpcId: !Ref SampleVPC
       SecurityGroupIngress:
