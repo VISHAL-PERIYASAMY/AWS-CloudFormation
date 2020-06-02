@@ -76,8 +76,8 @@ Resources:
       VpcId: !Ref SampleVPC
       SecurityGroupIngress:
       - IpProtocol: tcp
-        FromPort: '80'
-        ToPort: '80'
+        FromPort: '0'
+        ToPort: '65535'
         CidrIp: 0.0.0.0/0
   SampleVPCPublicSubnet:
     Type: 'AWS::EC2::Subnet'
