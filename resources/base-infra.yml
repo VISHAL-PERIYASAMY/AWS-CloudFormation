@@ -150,11 +150,11 @@ Resources:
       DBSubnetGroupName: !Ref RdsSubnetGroup
       AllocatedStorage: '5'
       DBInstanceClass: db.m4.large
-      DBSecurityGroups: [Ref: DBSecurityGroup]
+      DBSecurityGroups: [Ref: RdsDBSecurityGroup]
       MasterUsername: vishal
       MasterUserPassword: admin123
 
-  DBSecurityGroup:
+  RdsDBSecurityGroup:
     Type: AWS::RDS::DBSecurityGroup
     Properties:
       DBSecurityGroupIngress:
