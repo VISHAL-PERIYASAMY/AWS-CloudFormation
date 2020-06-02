@@ -61,11 +61,11 @@ Resources:
       GroupName: "SampleVPCSecurityGroup"
       GroupDescription: EC2 Security Group for instances launched in the VPC by Batch
       VpcId: !Ref SampleVPC
-      SecurityGroupIngress: 
-        - IpProtocol: tcp
-          CidrIp: 0.0.0.0/0
-          FromPort: '0'
-          ToPort: '65535'
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0
   SampleVPCPublicSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
@@ -143,15 +143,16 @@ Resources:
   SampleRDSDB:
     Type: AWS::RDS::DBInstance
     Properties:
+      DBInstanceIdentifier: "Sample-rds-db"
       DBName: "Sample"
+      Engine: MySQL
+      EngineVersion: 8.0.16
       DBSubnetGroupName: !Ref RdsSubnetGroup
       AllocatedStorage: '5'
-      DBInstanceClass: db.m5.xlarge
-      Engine: MySQL
+      DBInstanceClass: db.m4.large
       DBSecurityGroups: [Ref: DBSecurityGroup]
       MasterUsername: vishal
       MasterUserPassword: admin123
-    DeletionPolicy: Snapshot
 
   DBSecurityGroup:
     Type: AWS::RDS::DBSecurityGroup
